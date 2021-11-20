@@ -1,3 +1,6 @@
+from Scraper import download
+from Scraper import check_online
+from Scraper import MainLoop
 import json
 import requests
 from twitchAPI.twitch import Twitch
@@ -12,12 +15,25 @@ import matplotlib as mpl
 from matplotlib import font_manager as fm,rcParams
 from PIL import Image
 from io import BytesIO
+from secrets import CLIENT_ID,ACCESS_TOKEN
+
+
+"""""""""""""""
+INPUTS
+
+"""""""""""""""
+STREAMER = 'zeling'
+DELAY = 6
+
+
+""""""""""""""""""
 
 
 
 
+now_time = datetime.now()
 
+download(STREAMER)
+filename = check_online(STREAMER, DELAY_CHECK=5)
+MainLoop(STREAMER ,filename, DELAY)
 
-if __name__ == '__main__':
-
-    print('hola')
