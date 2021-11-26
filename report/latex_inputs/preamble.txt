@@ -1,0 +1,180 @@
+\documentclass[a4paper,10pt,twoside]{report}
+\usepackage[spanish]{babel} % espanol
+\usepackage[utf8]{inputenc}
+\usepackage[latin1]{inputenc} % acentos sin codigo
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{float}
+\raggedbottom % para que al usar el twoside no se jodan las imagenes con espacios
+\usepackage{array}
+\usepackage{lastpage}
+\usepackage{lipsum}
+\usepackage{color}
+\usepackage{eso-pic}
+\usepackage{amsmath}
+\usepackage[shortlabels]{enumitem} %para enumerar con letras
+\usepackage{fancyhdr}
+%\usepackage{cmbright}
+\usepackage{fontspec}
+\setmainfont{Montserrat}
+
+\usepackage{lscape}
+\usepackage{rotating}
+
+
+
+\usepackage{blindtext}
+
+\usepackage{bold-extra}
+\usepackage{framed}
+\usepackage{booktabs}
+\usepackage{multirow} % para las tablas
+\usepackage[hmargin=2.5cm,top=4.5cm,bottom=2cm,headheight=72pt,footskip=85pt]{geometry}
+\usepackage[owncaptions, nochapter]{vhistory}
+
+
+
+
+
+\setlength{\parindent}{0cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Capitulos reset a 1 despues de cada parte.
+\makeatletter
+\@addtoreset{chapter}{part}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%PIES DE IMAGEN EN CURSIVA %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[format=plain,
+            labelformat={parens},
+            labelfont={bf,it},
+            textcolor={capgemini_blue},
+            textfont={color=rodeo_blue,sl},footnotesize]{caption}
+
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+           %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\usepackage{etoolbox}  %%%%este par de codigos hace que las PARTES empiecen en pagina impar
+\pretocmd{\part}{\cleardoublepage}{}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%este bloque es para poder definir la PARTE y ponerla en el encabezado
+\newcommand*\parttitle{}
+\let\origpart\part
+\renewcommand*{\part}[2][]{%
+\ifx\\#1\\% optional argument not present?
+  \origpart{#2}%
+  \renewcommand*\parttitle{#2}%
+\else
+  \origpart[#1]{#2}%
+  \renewcommand*\parttitle{#1}%
+\fi
+}
+%%%%%%%%%%%%%%%%%%%%%ENCABEZADO%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\chaptermark}[1]{%
+\markboth{{%  \MakeUppercase
+\ \thechapter.%
+\ #1}}{}}
+
+\fancyhead[CE,CO,LE,LO,RE,RO]{} %% clear out all headers
+\fancyhead[C]{%
+          \begin{tabular}{m{3.2cm} m{9.0cm} m{1.5cm}}
+          %\hline
+          %\centering
+          \raggedright
+          \includegraphics[width=3cm]{LOGO_INDEX} &
+          \centering
+          \normalsize{INFORME DE RESULTADOS} \\
+          \sffamily\Large \textcolor{rodeo_grey}{DATE} & %\\ %\sffamily
+          %\small{\textbf{\rightmark}} &
+          \raggedleft
+          \normalsize \textcolor{rodeo_blue}{\textbf{\thepage}}  \footnotesize  \textcolor{rodeo_grey}{ / \pageref{LastPage}}
+          %\tabularnewline
+          \end{tabular}%
+          \hline
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ENCABEZADO DEL INDICE
+
+\fancypagestyle{basicstyle}{%
+ \fancyhf{}
+ \fancyhead[C]{\begin{tabular}{m{3.0cm}m{9.0cm}m{2.5cm}}
+          %\hline
+          \centering
+          \includegraphics[width=2cm]{LOGO_INDEX} &
+          \centering
+          \sffamily\normalsize{\rightmark} & %\\
+          %\small{\textbf{\rightmark}} &
+          \centering
+          \sffamily  \thepart
+          \sffamily\small{P\'ag. \thepage\\
+          \sffamily\footnotesize Rev. \vhCurrentVersion}\tabularnewline
+          \hline
+          \end{tabular}}
+  %\fancyhead[LO,RE]{\includegraphics[width=2.9cm]{LOGO_INDEX}}
+}
+
+
+\usepackage{tocbasic}
+\addtotoclist[report.cls]{toc}
+\renewcommand*{\tableofcontents}{\listoftoc[{\contentsname}]{toc}}% ToC under control of tocbasic
+\AfterTOCHead[toc]{\thispagestyle{basicstyle}\pagestyle{basicstyle}}
+\AfterStartingTOC[toc]{\clearpage}
+
+
+
+
+
+
+
+
+%%%%%%%COLORS
+\definecolor{capgemini_blue}{rgb}{0.0, 0.4, 0.65}
+\definecolor{capgemini_cyan}{rgb}{0.0, 0.55, 0.87}
+\definecolor{rodeo_grey}{rgb}{0.36, 0.52, 0.68}
+\definecolor{rodeo_blue}{rgb}{0.14, 0.20, 0.27}
+\definecolor{rodeo_green}{rgb}{0.14, 0.33, 0.25}
+\definecolor{rodeo_yellow}{rgb}{0.73, 0.75, 0.68}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%TITULOS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[explicit,raggedright]{titlesec}
+\usepackage{tikz}
+\newcommand{\hsp}{\hspace{10pt}}
+
+\titleformat{\chapter}
+    {\raggedright\Huge\color{rodeo_blue}\bfseries} %\scshape
+    {\thechapter\hsp\textcolor{black}{\vrule width 1pt}\hsp }{2pt}
+  {#1}
+
+
+\titleformat{\section}
+  {\LARGE\bfseries\color{rodeo_grey}}{\thesection\space}
+  {1ex}
+  {#1}
+
+
+\titleformat{\subsection}
+  {\Large\bfseries\color{Azure}}{\thesubsection\space}
+  {1ex}
+  {#1}
+
+
+
+
+\titleformat{\subsubsection}
+  {\large\bfseries\color{ball}}{\space\space\thesubsubsection\space}
+  {1ex}
+  {#1}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+\setcounter{tocdepth}{1} %%%%%%%%%%%%%para que no aparezcan subsecciones en el INDICE
+
+%\AtBeginDocument{\addtocontents{toc}{\protect\thispagestyle{empty}}}
+
+\usepackage{hyperref}

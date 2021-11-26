@@ -43,8 +43,6 @@ def download(STREAMER):
     for item in stream['data']:
         item['hour']= str(now_time)
 
-    views = stream['data'][0]['viewer_count']
-    user = stream['data'][0]['user_name']
 
     return stream['data']
 
@@ -55,13 +53,16 @@ def check_online(STREAMER,DELAY_CHECK):
     #    check if streamer is ONLINE   #
     ####################################
     while True:
-        clear_output(wait=True)
+
         try:
             DATA = download(STREAMER)
+            date = str(DATA[0]['started_at']).split(':')[0].replace('-', '_')
+            print(DATA)
             print(f'Streaming ON - {STREAMER}')
             break
         except IndexError:
-            print('Streaming OFF')
+            timee = str(datetime.now()).split(' ')[1].split('.')[0]
+            print('Streaming OFF - ', timee)
             time.sleep(DELAY_CHECK)
 
     ####################################
@@ -137,7 +138,7 @@ def MainLoop(STREAMER, filename, DELAY):
 
             print('n:',len(data_read))
 
-        print('BIEN')
+        print(str(response[0]['hour']).split(' ')[1].split('.')[0])
         time.sleep(DELAY- time.monotonic() % 1)
 
 
@@ -145,11 +146,12 @@ def MainLoop(STREAMER, filename, DELAY):
 
 if __name__ == '__main__':
 
-    STREAMER = 'zeling'
+    STREAMER = 'elxokas'
     now_time = datetime.now()
     twitch = login()
 
     download(STREAMER)
     filename = check_online(STREAMER, 5)
+    print(filename)
     MainLoop(STREAMER,filename,6)
 

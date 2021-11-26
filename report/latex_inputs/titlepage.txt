@@ -1,0 +1,31 @@
+\begin{titlepage}
+	\centering
+	{\sffamily\normalsize \textcolor{color2} {TITLE2} \par}
+	\vspace{2cm}
+	\includegraphics[width=9cm]{LOGO}\par\vspace{1cm}
+	\vspace{0.7cm}
+	\textcolor{rodeo_grey}{\rule{130mm}{0.01mm}}\\ %%%%% linea con COLOR
+	\vspace{1cm}
+	{\sffamily\Large \textcolor{color3} {TITLE3} \par}
+
+	\vspace{0.5cm}
+	{\huge\bfseries  \textcolor{rodeo_blue}{MAIN_TITLE} \par}
+	\vspace{0.8cm}
+		\textcolor{rodeo_grey}{\rule{130mm}{0.01mm}}\\ %%%%% linea con COLOR
+		\vspace{0.5cm}
+	{\sffamily\large DATE \par}
+	\vspace{1cm}
+
+	\vfill
+	%supervised by\par   Texto extra abajo
+	%Dr.~Mark \textsc{Brown}
+
+	\vfill
+
+% Bottom of the page
+	%{\large \today\par}
+
+
+\AddToShipoutPicture*{\put(0,0){\includegraphics[scale=1.05]{BACKGROUND}}} % Image background
+
+\end{titlepage}
