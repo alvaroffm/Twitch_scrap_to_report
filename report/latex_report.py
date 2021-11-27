@@ -106,7 +106,7 @@ class PythonLatex():
 
 
     def Add_chapter(self, TITLE, content_txt = None):
-        self.body.extend(['\chapter{%s}' % TITLE])
+        self.body.extend(['\chapter*{%s}' % TITLE])
         self.body.append(r'\thispagestyle{fancy}')
         if content_txt != None:
             with open(r'latex_inputs/' + content_txt) as f:
@@ -114,12 +114,14 @@ class PythonLatex():
 
                 self.body.extend(data.splitlines())
 
-    def Add_section(self, TITLE, content_txt):
-        with open(r'report/latex_inputs/' + content_txt) as f:
-            data = f.read()
-            self.body.extend(['\section{%s}' % TITLE])
-            self.body.extend(data.splitlines())
-
+    def Add_section(self, TITLE, content_txt = False):
+        if content_txt:
+            with open(r'report/latex_inputs/' + content_txt) as f:
+                data = f.read()
+                self.body.extend(['\section*{%s}' % TITLE])
+                self.body.extend(data.splitlines())
+        else:
+            self.body.extend(['\section*{%s}' % TITLE])
 
 
 

@@ -44,8 +44,6 @@
 \makeatother
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%PIES DE IMAGEN EN CURSIVA %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[format=plain,
-            labelformat={parens},
-            labelfont={bf,it},
             textcolor={capgemini_blue},
             textfont={color=rodeo_blue,sl},footnotesize]{caption}
 
@@ -83,8 +81,8 @@
           \raggedright
           \includegraphics[width=3cm]{LOGO_INDEX} &
           \centering
-          \normalsize{INFORME DE RESULTADOS} \\
-          \sffamily\Large \textcolor{rodeo_grey}{DATE} & %\\ %\sffamily
+          \sffamily\Large \textcolor{rodeo_grey}{DATE} \\
+          \normalsize{INFORME DE RESULTADOS}& %\\ %\sffamily
           %\small{\textbf{\rightmark}} &
           \raggedleft
           \normalsize \textcolor{rodeo_blue}{\textbf{\thepage}}  \footnotesize  \textcolor{rodeo_grey}{ / \pageref{LastPage}}
