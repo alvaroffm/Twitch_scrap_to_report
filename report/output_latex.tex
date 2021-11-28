@@ -75,18 +75,15 @@
 
 \fancyhead[CE,CO,LE,LO,RE,RO]{} %% clear out all headers
 \fancyhead[C]{%
-          \begin{tabular}{m{3.2cm} m{9.0cm} m{1.5cm}}
-          %\hline
-          %\centering
-          \raggedright
-          \includegraphics[width=3cm]{report/images/artic_boa_logo.pdf} &
-          \centering
-          \sffamily\Large \textcolor{rodeo_grey}{evangelion0} \\
-          \normalsize{INFORME DE RESULTADOS}& %\\ %\sffamily
-          %\small{\textbf{\rightmark}} &
-          \raggedleft
-          \normalsize \textcolor{rodeo_blue}{\textbf{\thepage}}  \footnotesize  \textcolor{rodeo_grey}{ / \pageref{LastPage}}
-          %\tabularnewline
+          \begin{tabular}[t]{@{}f{10.7cm}l@{}}
+          \begin{tabular}{m{2.5cm}}
+          \includegraphics[width=2.5cm]{report/images/artic_boa_logo.pdf}
+          \end{tabular} &
+          \begin{minipage}[f]{10.7cm}
+            \raggedleft{\large \itshape \textcolor{rodeo_grey}{auronplay} \\ \scriptsize{RESULTADOS DE LA RETRANSMISION}} \end{minipage}
+           & \begin{tabular}[f]{f{1cm}}
+            \includegraphics[width=1cm]{report/images/auronplay_profile.jpg}
+            \end{tabular}
           \end{tabular}%
           \hline
 }
@@ -181,12 +178,15 @@
 \definecolor{otra_prueba}{rgb}{0.00392156862745098,0.7843137254901961,0.0}
  
 \begin{document}
-\chapter*{Análiticas de la transmisión}
-\thispagestyle{fancy}
-\section*{Sábado, 27 de Noviembre de 2021}
+\section*{Domingo, 28 de Noviembre de 2021}
 \begin{figure}[H]
    \centering
-   \includegraphics[width=1.000000\textwidth]{data/evangelion0_2021_11_27.pdf}
+   \includegraphics[width=0.200000\textwidth]{report/images/auronplay_profile.jpg}
+   \caption*{ }
+   \end{figure}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width=1.000000\textwidth]{data/auronplay_2021_11_28.pdf}
    \caption*{Numero de viewers durante la retransmisión}
    \end{figure}
 \end{document}

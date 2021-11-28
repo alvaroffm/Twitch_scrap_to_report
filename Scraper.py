@@ -13,6 +13,7 @@ from matplotlib import font_manager as fm,rcParams
 from PIL import Image
 from io import BytesIO
 from secrets import CLIENT_ID,ACCESS_TOKEN
+from misc import bcolors
 
 
 def login():
@@ -58,11 +59,11 @@ def check_online(STREAMER,DELAY_CHECK):
             DATA = download(STREAMER)
             date = str(DATA[0]['started_at']).split(':')[0].replace('-', '_')
             print(DATA)
-            print(f'Streaming ON - {STREAMER}')
+            print(bcolors('OKGREEN', 'Streaming ON - '),f'{STREAMER}')
             break
         except IndexError:
             timee = str(datetime.now()).split(' ')[1].split('.')[0]
-            print('Streaming OFF - ', timee)
+            print(bcolors('WARNING', 'Streaming OFF - ' ),  timee)
             time.sleep(DELAY_CHECK)
 
     ####################################
@@ -71,7 +72,7 @@ def check_online(STREAMER,DELAY_CHECK):
 
     date = str(DATA[0]['started_at']).split(':')[0].replace('-','_')
     last_day=datetime.now().day
-    filename = current_directory + f'/data/{STREAMER}_{date}.json'
+    filename = current_directory + f'/data/{date}_{STREAMER}.json'
 
     os.makedirs(os.path.dirname(filename), exist_ok=True)
 

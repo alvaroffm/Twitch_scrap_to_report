@@ -75,18 +75,15 @@
 
 \fancyhead[CE,CO,LE,LO,RE,RO]{} %% clear out all headers
 \fancyhead[C]{%
-          \begin{tabular}{m{3.2cm} m{9.0cm} m{1.5cm}}
-          %\hline
-          %\centering
-          \raggedright
-          \includegraphics[width=3cm]{LOGO_INDEX} &
-          \centering
-          \sffamily\Large \textcolor{rodeo_grey}{DATE} \\
-          \normalsize{INFORME DE RESULTADOS}& %\\ %\sffamily
-          %\small{\textbf{\rightmark}} &
-          \raggedleft
-          \normalsize \textcolor{rodeo_blue}{\textbf{\thepage}}  \footnotesize  \textcolor{rodeo_grey}{ / \pageref{LastPage}}
-          %\tabularnewline
+          \begin{tabular}[t]{@{}f{10.7cm}l@{}}
+          \begin{tabular}{m{2.5cm}}
+          \includegraphics[width=2.5cm]{LOGO_INDEX}
+          \end{tabular} &
+          \begin{minipage}[f]{10.7cm}
+            \raggedleft{\large \itshape \textcolor{rodeo_grey}{STREAMER_NAME} \\ \scriptsize{RESULTADOS DE LA RETRANSMISION}} \end{minipage}
+           & \begin{tabular}[f]{f{1cm}}
+            \includegraphics[width=1cm]{LOGO_STREAMER}
+            \end{tabular}
           \end{tabular}%
           \hline
 }

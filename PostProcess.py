@@ -21,6 +21,8 @@ from scipy.interpolate import make_interp_spline
 import numpy as np
 from datetime import timedelta
 from textwrap import wrap
+from secrets import CLIENT_ID,ACCESS_TOKEN
+
 
 
 
@@ -46,10 +48,12 @@ def Data_frame(filename):
 
     return df
 
-def Graph(STREAMER, df):
+def Graph(STREAMER, df, flag_plot=False):
 
     row_max_viewers = df['viewer_count'].idxmax()
-    color = '#18bc9c'
+    color1 = '#18bc9c' #light blue
+    color2 = '#243345' #dark blue
+    color = '#5c85ad'
 
     fpath = os.path.join(mpl.get_data_path(),
                          r"C:\Users\Buzz\PycharmProjects\Cochesnet_Latex\fonts\Montserrat-Regular.ttf")
@@ -70,6 +74,15 @@ def Graph(STREAMER, df):
     points_to_plot = list(df_clean[views_change].index)
 
     ax3.plot(df_clean['hour'], df_clean['viewer_count'], color=color)
+
+
+
+
+
+
+
+
+
 
     # legend1 = ax3.legend(handletextpad=1.5, labelspacing = 1.5, framealpha = 0.4)
     # ax3.add_artist(legend1)
@@ -109,7 +122,7 @@ def Graph(STREAMER, df):
     for tick in ax3.get_yticklabels():
         tick.set_fontproperties(prop)
 
-    ax3.fill_between(df_clean['hour'][points_to_plot], df_clean['viewer_count'][points_to_plot], 0, color=color,
+    ax3.fill_between(df_clean['hour'], df_clean['viewer_count'], 0, color=color,
                      alpha=0.04, )
 
     df.started = df_clean['started_at'][0]
@@ -128,6 +141,7 @@ def Graph(STREAMER, df):
     streaming_hours = round(streaming_minutes / 60, 2)
 
     max_viewers = df_clean.viewer_count.max()
+
 
     print(f'{streaming_hours = } hours')
     print(f'{streaming_minutes = } minutes')
@@ -155,22 +169,22 @@ def Graph(STREAMER, df):
                  df_clean['game_name'][index], rotation=270, verticalalignment='bottom' if index != 0 else 'top',
                  color='#cd0033', fontproperties=prop_game)
 
-    lenght = len(df_clean.index)
 
-    plt.axhline(y=df_clean['viewer_count'].max(), xmin=0, xmax=1, color=color, linewidth=1, alpha=0.5,
+
+    plt.axhline(y=df_clean['viewer_count'].max(), xmin=0, xmax=1, color=color, linewidth=1, alpha=1,
                 linestyle='dotted')
 
-    plt.axhline(y=df_clean['viewer_count'].mean(), xmin=0, xmax=1, color='#210a68', linewidth=1, alpha=0.5,
+    plt.axhline(y=df_clean['viewer_count'].mean(), xmin=0, xmax=1, color= color2, linewidth=1, alpha=1,
                 linestyle='dotted')
 
     ax3.annotate('MAX' + '\n' + str(int(df_clean['viewer_count'].max())), (1, 1),
-                 xytext=(1.01, df_clean['viewer_count'].max() / df_clean['viewer_count'].max()),
+                 xytext=(1.01, 0.98 * df_clean['viewer_count'].max() / df_clean['viewer_count'].max()),
                  xycoords='axes fraction', color=color, fontproperties=prop_metrics, verticalalignment='center',
                  horizontalalignment='left')
 
     ax3.annotate('AVG' + '\n' + str(int(df['viewer_count'].mean())), (1, 1),
-                 xytext=(1.01, df_clean['viewer_count'].mean() / df_clean['viewer_count'].max()),
-                 xycoords='axes fraction', color='#210a68', fontproperties=prop_metrics, verticalalignment='center',
+                 xytext=(1.01, 0.99 * df_clean['viewer_count'].mean() / df_clean['viewer_count'].max()),
+                 xycoords='axes fraction', color=color2, fontproperties=prop_metrics, verticalalignment='center',
                  horizontalalignment='left')
 
     ax3.xaxis.set_major_formatter(DateFormatter('%H:%M'))
@@ -192,10 +206,99 @@ def Graph(STREAMER, df):
     plt.interactive(True)
     plt.savefig(imagename, bbox_inches='tight')
 
-    return imagename
+
+
+    ##########################################
+    #               GAME STATS               #
+    ##########################################
+
+    avg_viewers = df_clean.viewer_count.mean()
+    games = df_clean['game_name'].unique()
+    games_played = []
+    hours_played = []
+    game_avg_viewers = []
+    game_max_viewers = []
+    images = []
+    for game in games:
+        print(game)
+        df_game = df_clean[df_clean['game_name']==game]
+        max_viewers_game = df_game['viewer_count'].max()
+        # print(max_viewers_game)
+        avg_viewers_game = df_game['viewer_count'].mean()
+        # print('avg' , avg_viewers_game)
+
+
+        game_streaming_minutes = len(df_game) * 2
+
+        game_streaming_hours = round(game_streaming_minutes / 60, 2)
+
+        print(game_streaming_hours)
+
+        game_time = game_streaming_hours
+
+        game_hours = int(game_time)
+        game_minutes = (game_time * 60) % 60
+
+        game_duration = "%dh %02dm" % (game_hours, game_minutes)
+        hours_played.append(game_duration)
+        games_played.append(game)
+        game_avg_viewers.append(int(avg_viewers_game))
+        game_max_viewers.append(int(max_viewers_game))
+
+
+
+        twitch = Twitch(CLIENT_ID, ACCESS_TOKEN)
+        twitch.authenticate_app([])
+
+
+
+
+        stream = twitch.get_games(names = game)
+        url = stream['data'][0]['box_art_url'].replace('-{width}x{height}', '')
+
+        images.append(url)
+        print(images)
+
+
+
+    zip_data = zip(games_played,hours_played,game_avg_viewers,game_max_viewers,images)
+    games_df_games = pd.DataFrame(zip_data,columns = ['Game','Played Time','AVG', 'MAX','Img Url'])
+    # dddd= games_df_games.transpose()
+    # print(dddd.columns)
+    # dddd.rename(columns={"A": "a", "B": "c"})
+
+    print(games_df_games)
+
+
+
+    ######## CHANNEL IMAGE ########
+    twitch = Twitch(CLIENT_ID, ACCESS_TOKEN)
+    twitch.authenticate_app([])
+
+    stream = twitch.get_users(logins=STREAMER)
+    url2 = stream['data'][0]['profile_image_url']
+    response2 = requests.get(url2)
+    profile_img = Image.open(BytesIO(response2.content))
+
+    fig5, ax5 = plt.subplots()
+    ax5.imshow(profile_img)
+    ax5.axis('off')  # clear x-axis and y-axis
+    plt.interactive(True)
+    profile_img = f'report/images/{STREAMER}_profile.jpg'
+    plt.savefig(profile_img, bbox_inches='tight')
+
+
+
+
+
+
+    return imagename, games_df_games, profile_img
 
 
 if __name__ == '__main__':
-    STREAMER = 'elxokas'
-    df = Data_frame(f'data/elxokas_2021_11_20T17.json')
-    Graph(STREAMER,df)
+
+    cwd = os.getcwd()
+    df = Data_frame(f'data/auronplay_2021_11_26T16.json')
+    STREAMER = str(df['user_login'].unique()).split("'")[1]
+    imagen, games , profile_img = Graph(STREAMER,df, flag_plot=True)
+    # print(games)

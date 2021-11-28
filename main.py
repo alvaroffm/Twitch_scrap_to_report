@@ -29,8 +29,8 @@ from secrets import CLIENT_ID,ACCESS_TOKEN
 INPUTS
 
 """""""""""""""
-STREAMER = 'evangelion0'
-DELAY = 120
+STREAMER = 'knekro'
+DELAY = 180
 
 """"""""""""""""""
 #
@@ -45,47 +45,54 @@ year = now_time.year
 FECHA = f'{day_of_week}, {day} de {month} de {year}'
 print(FECHA)
 
-# while True:
+while True:
 
-now_time = datetime.now()
+    now_time = datetime.now()
 
-# download(STREAMER)
-# filename = check_online(STREAMER, DELAY_CHECK=120)
-# print(filename)
-# MainLoop(STREAMER ,filename, DELAY)
-filename = r'C:\Users\Buzz\PycharmProjects\Twitch_scrap_to_report/data/auronplay_2021_11_26T16.json'
-Data_frame(filename)
-df = Data_frame(filename)
-image = Graph(STREAMER,df)
+    # download(STREAMER)
+    # filename = check_online(STREAMER, DELAY_CHECK=180)
+    # print(filename)
+    # MainLoop(STREAMER ,filename, DELAY)
+    filename = r'C:\Users\Buzz\PycharmProjects\Twitch_scrap_to_report/data/auronplay_2021_11_26T16.json'
+    # UNCOMMENT TO CHECK WITHOUT RUNNING THE LOOP
+    Data_frame(filename)
+    df = Data_frame(filename)
+    ST = df['user_login'].iloc[1]
+    image, games_df ,profile_img = Graph(ST,df,flag_plot=True)
+    print(games_df)
 
-with timer():
+    with timer():
 
-    PL = PythonLatex(STREAMER , portada='portada2.pdf', logo='artic_boa_logo.pdf')
-    PL.Preamble('artic_boa_logo.pdf')
-    PL.Add_color('prueba_color', 255, 0, 0)
-    PL.Add_color('otra_prueba', 1, 200, 0, flag_print=False)
+        PL = PythonLatex(ST , portada='portada2.pdf', logo='artic_boa_logo.pdf')
+        PL.Preamble('artic_boa_logo.pdf',profile_img)
+        PL.Add_color('prueba_color', 255, 0, 0)
+        PL.Add_color('otra_prueba', 1, 200, 0, flag_print=False)
 
-    # PL.Titlepage(TITLE2='ANÁLISIS DE MERCADO DE SEGUNDA MANO', MAIN_TITLE='VOLKSWAGEN ARTEON', TITLE3='INFORME DE RESULTADOS')
-    PL.Add_chapter('Análiticas de la transmisión')
-    PL.Add_section(FECHA)
-    PL.Add_image(image, 'Numero de viewers durante la retransmisión', SIZEREL=1)
+        # PL.Titlepage(TITLE2='ANÁLISIS DE MERCADO DE SEGUNDA MANO', MAIN_TITLE='VOLKSWAGEN ARTEON', TITLE3='INFORME DE RESULTADOS')
 
-
-    PL.Write()
-
-
-with timer():
-    print('Compilando archivo TEX')
-    os.system('xelatex -quiet report/output_latex.tex')
-    print(bcolors('OKGREEN', 'Archivo PDF creado correctamente'))
-    file = filename.split('/data/')[1].split('.json')[0]
-    shutil.move('output_latex.pdf', f'report/{file}.pdf')
+        # PL.Add_chapter('Análiticas de la transmisión')
+        PL.Add_section(FECHA)
+        PL.Add_image(profile_img, SIZEREL=0.2)
+        PL.Add_image(image, 'Numero de viewers durante la retransmisión', SIZEREL=1)
 
 
-    to_delete=['output_latex.log','output_latex.out','output_latex.aux','texput.log']
-    for item in to_delete:
-        os.remove(item)
+        PL.Write()
 
 
-# if __name__ == '__main__':
+    with timer():
+        print('Compilando archivo TEX')
+        os.system('xelatex -quiet report/output_latex.tex')
+        print(bcolors('OKGREEN', '\n #################################### \n # Archivo PDF creado correctamente # \n ####################################'))
+        file = filename.split('/data/')[1].split('.json')[0]
+        shutil.move('output_latex.pdf', f'report/{file}.pdf')
+
+
+        to_delete=['output_latex.log','output_latex.out','output_latex.aux']
+        for item in to_delete:
+            os.remove(item)
+
+    # os.system(r'C:\Users\Buzz\PycharmProjects\Twitch_scrap_to_report\report\%s.pdf' %file)
+
+    break
+
 

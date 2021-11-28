@@ -30,7 +30,7 @@ class PythonLatex():
         self.preamble.append(r'\setmainfont{%s}' % fontname)
 
 
-    def Preamble(self, LOGO):
+    def Preamble(self, LOGO, LOGO_STREAMER):
         TODAY = datetime.datetime.now()
         DAY = str(TODAY.day)
         YEAR = str(TODAY.year)
@@ -39,7 +39,7 @@ class PythonLatex():
         with open('report/latex_inputs/preamble.txt') as f:
             data = f.read().splitlines()
             for line in data:
-                line = line.replace('DATE', self.STREAMER)
+                line = line.replace('STREAMER_NAME', self.STREAMER)
                 if line.startswith('\setmainfont') and self.fontname not in line:
                     line_split = line.split("[")
                     line_split[1] = f'[{self.fontname}]'
@@ -49,6 +49,8 @@ class PythonLatex():
 
                 if 'LOGO_INDEX' in line:
                     line = line.replace('LOGO_INDEX', f'report/images/{LOGO}')
+                if 'LOGO_STREAMER' in line:
+                    line = line.replace('LOGO_STREAMER', f'{LOGO_STREAMER}')
 
                 self.preamble.append(line)
                 # print(line, file=None)
@@ -79,7 +81,7 @@ class PythonLatex():
             # print(line, file=None)
 
 
-    def Add_image(self, IMAGE, CAPTION, SIZEREL=0.7, landscape=False):
+    def Add_image(self, IMAGE, CAPTION = ' ', SIZEREL=0.7, landscape=False):
         with open('report/latex_inputs/image.txt') as f:
             data = f.read()
 
