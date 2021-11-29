@@ -29,12 +29,12 @@ from secrets import CLIENT_ID,ACCESS_TOKEN
 INPUTS
 
 """""""""""""""
-STREAMER = 'knekro'
+STREAMER = 'migguztv'
 DELAY = 180
 
 """"""""""""""""""
 #
-locale.setlocale(locale.LC_ALL,'es_ES.UTF-8')
+# locale.setlocale(locale.LC_ALL,'es_ES.UTF-8')
 now_time = datetime.now()
 day_of_week = now_time.strftime("%A").capitalize()
 day = now_time.day
@@ -49,11 +49,11 @@ while True:
 
     now_time = datetime.now()
 
-    # download(STREAMER)
-    # filename = check_online(STREAMER, DELAY_CHECK=180)
-    # print(filename)
-    # MainLoop(STREAMER ,filename, DELAY)
-    filename = r'C:\Users\Buzz\PycharmProjects\Twitch_scrap_to_report/data/auronplay_2021_11_26T16.json'
+    download(STREAMER)
+    filename = check_online(STREAMER, DELAY_CHECK=180)
+    print(filename)
+    MainLoop(STREAMER ,filename, DELAY)
+    # filename = r'C:\Users\Buzz\PycharmProjects\Twitch_scrap_to_report/data/auronplay_2021_11_26T16.json'
     # UNCOMMENT TO CHECK WITHOUT RUNNING THE LOOP
     Data_frame(filename)
     df = Data_frame(filename)

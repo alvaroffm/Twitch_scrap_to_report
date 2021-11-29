@@ -1,5 +1,5 @@
 \begin{figure}[H]
    \centering
-   \includegraphics[width=SIZEREL\textwidth]{IMAGE}
+   \includegraphics[width=SIZEREL\textwidth,left]{IMAGE}
    \caption*{CAPTION}
    \end{figure}

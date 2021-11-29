@@ -7,6 +7,7 @@
 \usepackage{float}
 \raggedbottom % para que al usar el twoside no se jodan las imagenes con espacios
 \usepackage{array}
+\usepackage[export]{adjustbox} %ajustar imagenes izqa
 \usepackage{lastpage}
 \usepackage{lipsum}
 \usepackage{color}
@@ -80,9 +81,9 @@
           \includegraphics[width=2.5cm]{report/images/artic_boa_logo.pdf}
           \end{tabular} &
           \begin{minipage}[f]{10.7cm}
-            \raggedleft{\large \itshape \textcolor{rodeo_grey}{auronplay} \\ \scriptsize{RESULTADOS DE LA RETRANSMISION}} \end{minipage}
+            \raggedleft{\large \itshape \textcolor{rodeo_grey}{knekro} \\ \scriptsize{RESULTADOS DE LA RETRANSMISION}} \end{minipage}
            & \begin{tabular}[f]{f{1cm}}
-            \includegraphics[width=1cm]{report/images/auronplay_profile.jpg}
+            \includegraphics[width=1cm]{report/images/knekro_profile.jpg}
             \end{tabular}
           \end{tabular}%
           \hline
@@ -178,15 +179,15 @@
 \definecolor{otra_prueba}{rgb}{0.00392156862745098,0.7843137254901961,0.0}
  
 \begin{document}
-\section*{Domingo, 28 de Noviembre de 2021}
+\section*{Sunday, 28 de November de 2021}
 \begin{figure}[H]
    \centering
-   \includegraphics[width=0.200000\textwidth]{report/images/auronplay_profile.jpg}
+   \includegraphics[width=0.200000\textwidth,left]{report/images/knekro_profile.jpg}
    \caption*{ }
    \end{figure}
 \begin{figure}[H]
    \centering
-   \includegraphics[width=1.000000\textwidth]{data/auronplay_2021_11_28.pdf}
+   \includegraphics[width=1.000000\textwidth,left]{data/knekro_2021_11_29.pdf}
    \caption*{Numero de viewers durante la retransmisión}
    \end{figure}
 \end{document}

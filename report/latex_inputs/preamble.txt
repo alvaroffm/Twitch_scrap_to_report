@@ -7,6 +7,7 @@
 \usepackage{float}
 \raggedbottom % para que al usar el twoside no se jodan las imagenes con espacios
 \usepackage{array}
+\usepackage[export]{adjustbox} %ajustar imagenes izqa
 \usepackage{lastpage}
 \usepackage{lipsum}
 \usepackage{color}
