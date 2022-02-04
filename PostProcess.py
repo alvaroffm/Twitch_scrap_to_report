@@ -100,7 +100,7 @@ def Graph(STREAMER, df, flag_plot=False):
     # ax3.set_ylim(df['price'].min()*0.9, df['price'].max()*1.05)
     titulo_streamer_name = df_clean['user_name'][row_max_viewers]
     ax3.set_title(r"$\bf{" + titulo_streamer_name + "}$" + '\n' + '\n'.join(wrap(df_clean['title'][row_max_viewers])))
-    ax3.set_ylim(0, )
+    ax3.set_ylim(0, df['viewer_count'].max() * 1.1 )
 
     # @ticker.FuncFormatter
     def major_formatter(x, pos):
@@ -114,8 +114,8 @@ def Graph(STREAMER, df, flag_plot=False):
     plt.xticks(rotation=0)
     # legend1.set_title('Streamer', prop=prop_bold)
 
-    # ax3.xaxis.set_major_formatter(major_formatter2)
-    ax3.yaxis.set_major_formatter(major_formatter)
+    if df['viewer_count'].max()>1000:
+        ax3.yaxis.set_major_formatter(major_formatter)
 
     for tick in ax3.get_xticklabels():
         tick.set_fontproperties(prop)
@@ -165,29 +165,31 @@ def Graph(STREAMER, df, flag_plot=False):
         plt.vlines(x=df_clean['hour'][index], ymin=0, ymax=df_clean['viewer_count'].max() * 1.1, color='#cd0033',
                    linestyles='dashed', linewidth=0.5)
         plt.text(df_clean['hour'][index],
-                 (df_clean['viewer_count'].max() * 0.03) if index != 0 else df_clean['viewer_count'].max() * 1.03,
+                 (df_clean['viewer_count'].max() * 0.03) if index != 0 else df_clean['viewer_count'].max() * 1.05,
                  df_clean['game_name'][index], rotation=270, verticalalignment='bottom' if index != 0 else 'top',
                  color='#cd0033', fontproperties=prop_game)
 
+    position = int(df_clean[df_clean['viewer_count'] == df_clean['viewer_count'].max()].index[-1]) #posicion del punto máximo para plotear una linea vertical desde ese punto
+    print('POSITION',position)
 
-
-    plt.axhline(y=df_clean['viewer_count'].max(), xmin=0, xmax=1, color=color, linewidth=1, alpha=1,
+    plt.axhline(y=df_clean['viewer_count'].max(), xmin= position/len(df_clean)/1.02, xmax=1, color=color, linewidth=1, alpha=1,
                 linestyle='dotted')
 
     plt.axhline(y=df_clean['viewer_count'].mean(), xmin=0, xmax=1, color= color2, linewidth=1, alpha=1,
                 linestyle='dotted')
 
     ax3.annotate('MAX' + '\n' + str(int(df_clean['viewer_count'].max())), (1, 1),
-                 xytext=(1.01, 0.98 * df_clean['viewer_count'].max() / df_clean['viewer_count'].max()),
+                 xytext=(1.01, 0.93 * df_clean['viewer_count'].max() / df_clean['viewer_count'].max()),
                  xycoords='axes fraction', color=color, fontproperties=prop_metrics, verticalalignment='center',
                  horizontalalignment='left')
 
     ax3.annotate('AVG' + '\n' + str(int(df['viewer_count'].mean())), (1, 1),
-                 xytext=(1.01, 0.99 * df_clean['viewer_count'].mean() / df_clean['viewer_count'].max()),
+                 xytext=(1.01, 0.935 * df_clean['viewer_count'].mean() / df_clean['viewer_count'].max()),
                  xycoords='axes fraction', color=color2, fontproperties=prop_metrics, verticalalignment='center',
                  horizontalalignment='left')
 
     ax3.xaxis.set_major_formatter(DateFormatter('%H:%M'))
+
 
     time = streaming_hours
 
@@ -298,7 +300,7 @@ def Graph(STREAMER, df, flag_plot=False):
 if __name__ == '__main__':
 
     cwd = os.getcwd()
-    df = Data_frame(f'data/auronplay_2021_11_26T16.json')
+    df = Data_frame(f'data/2021_11_29T17_elxokas.json')
     STREAMER = str(df['user_login'].unique()).split("'")[1]
     imagen, games , profile_img = Graph(STREAMER,df, flag_plot=True)
     # print(games)

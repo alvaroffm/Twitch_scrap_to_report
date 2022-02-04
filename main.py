@@ -29,7 +29,7 @@ from secrets import CLIENT_ID,ACCESS_TOKEN
 INPUTS
 
 """""""""""""""
-STREAMER = 'migguztv'
+STREAMER = 'ERNESBARBEQ'
 DELAY = 180
 
 """"""""""""""""""
@@ -53,7 +53,7 @@ while True:
     filename = check_online(STREAMER, DELAY_CHECK=180)
     print(filename)
     MainLoop(STREAMER ,filename, DELAY)
-    # filename = r'C:\Users\Buzz\PycharmProjects\Twitch_scrap_to_report/data/auronplay_2021_11_26T16.json'
+    # filename = r'C:\Users\Buzz\PycharmProjects\Twitch_scrap_to_report/data/2022_01_24T18_elxokas.json'
     # UNCOMMENT TO CHECK WITHOUT RUNNING THE LOOP
     Data_frame(filename)
     df = Data_frame(filename)

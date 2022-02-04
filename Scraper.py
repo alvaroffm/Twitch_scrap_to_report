@@ -63,7 +63,7 @@ def check_online(STREAMER,DELAY_CHECK):
             break
         except IndexError:
             timee = str(datetime.now()).split(' ')[1].split('.')[0]
-            print(bcolors('WARNING', 'Streaming OFF - ' ),  timee)
+            print(bcolors('WARNING', 'Streaming OFF - ' ),  timee, STREAMER)
             time.sleep(DELAY_CHECK)
 
     ####################################

@@ -81,7 +81,7 @@
           \includegraphics[width=2.5cm]{LOGO_INDEX}
           \end{tabular} &
           \begin{minipage}[f]{10.7cm}
-            \raggedleft{\large \itshape \textcolor{rodeo_grey}{STREAMER_NAME} \\ \scriptsize{RESULTADOS DE LA RETRANSMISION}} \end{minipage}
+            \raggedleft{\large \itshape \textcolor{rodeo_grey}{STREAMER_NAME} \\ \scriptsize{BROADCAST STATS}} \end{minipage}
            & \begin{tabular}[f]{f{1cm}}
             \includegraphics[width=1cm]{LOGO_STREAMER}
             \end{tabular}

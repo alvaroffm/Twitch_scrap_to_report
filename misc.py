@@ -1,6 +1,9 @@
 import time
 import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib as mpl
+from matplotlib import font_manager as fm,rcParams
+import os
 
 def bcolors(weight, text):
     colors = dict(
@@ -32,6 +35,17 @@ class timer:
 
 def quickplot(x, y=None, ls='-', title=None, xlabel=None, ylabel=None, grid=True):
 
+    fpath = os.path.join(mpl.get_data_path(),
+                         r"C:\Users\Buzz\AppData\Local\Microsoft\Windows\Fonts\Montserrat-Regular.ttf")
+    fpath2 = os.path.join(mpl.get_data_path(),
+                          r"C:\Users\Buzz\AppData\Local\Microsoft\Windows\Fonts\Montserrat-SemiBold.ttf")
+
+    prop = fm.FontProperties(fname=fpath, weight='bold')
+    prop_game = fm.FontProperties(fname=fpath, size=13)
+    prop_metrics = fm.FontProperties(fname=fpath, size=11)
+    prop = fm.FontProperties(fname=fpath, weight='bold')
+    prop_bold = fm.FontProperties(fname=fpath2, weight='bold', size=13)
+
     _, ax = plt.subplots()
 
     if y is not None:
@@ -39,9 +53,11 @@ def quickplot(x, y=None, ls='-', title=None, xlabel=None, ylabel=None, grid=True
     else:
         ax.plot(range(len(x)), x, ls)
 
-    ax.set_title(title)
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
+    ax.set_ylabel(ylabel, fontproperties=prop_bold)
+    ax.set_xlabel(xlabel, fontproperties=prop_bold)
+    ax.set_title(title, fontproperties=prop_bold)
+
+
     ax.grid(grid)
 
 
@@ -57,3 +73,10 @@ def ProgressBar(counter,total):
 
 def Underscore(text):
     return '$_{%s}$' %text
+
+
+
+if __name__ == '__main__':
+    x= np.linspace(0,100,100)
+    y=lambda x : x**2/10
+    quickplot(x,y(x),title='titulo',xlabel='xlabel', ylabel='ylabel')
