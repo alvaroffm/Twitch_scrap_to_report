@@ -124,6 +124,11 @@ def MainLoop(STREAMER, filename, DELAY):
             print('Scraping Acabado')
             os.rename(filename, filename.split('.')[0] + '_f.json')
             break
+        except:
+            print('FALLO DE CONEXIO, reintentando en 20 sec')
+            time.sleep(20)
+            response = download(STREAMER)
+            print(response[0]['user_name'])
 
         with open(filename, 'r', encoding="utf-8") as file_read:
 

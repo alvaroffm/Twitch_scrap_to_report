@@ -77,6 +77,13 @@ def Underscore(text):
 
 
 if __name__ == '__main__':
-    x= np.linspace(0,100,100)
-    y=lambda x : x**2/10
-    quickplot(x,y(x),title='titulo',xlabel='xlabel', ylabel='ylabel')
+    # x= np.linspace(0,100,100)
+    # y=lambda x : x**2/10
+    # quickplot(x,y(x),title='titulo',xlabel='xlabel', ylabel='ylabel')
+
+    print(bcolors('OKGREEN', 'Streaming ON - '), f'PRUEBAAA')
+    print(bcolors('WARNING', 'Streaming ON - '), f'PRUEBAAA')
+    print(bcolors('OKBLUE', 'Streaming ON - '), f'PRUEBAAA')
+    print(bcolors('ENDC', 'Streaming ON - '), f'PRUEBAAA')
+    print(bcolors('BOLD', 'Streaming ON - '), f'PRUEBAAA')
+    print(bcolors('UNDERLINE', 'Streaming ON - '), f'PRUEBAAA')

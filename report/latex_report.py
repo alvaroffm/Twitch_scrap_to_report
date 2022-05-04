@@ -3,6 +3,7 @@ import datetime
 from datetime import date
 from misc import bcolors
 import os
+import requests
 
 
 
@@ -126,6 +127,29 @@ class PythonLatex():
             self.body.extend(['\section*{%s}' % TITLE])
 
 
+    def Crete_table_info(self,games_df,profile_img):
+
+        self.body.extend([r'\begin{tabular}{m{1cm}llll}'])
+        # self.body.extend([r'\centered{\textbf{GAME}}   &  \centered{\textbf{TIME}}  &  IMAGE & \textbf{AVG}  & \textbf{MAX}\\'])
+        # self.body.extend([r'\hline'])
+
+        for index,row in games_df.iterrows():
+            print('AQUI ESTÁ EL GAME',row.Game)
+            img_data = requests.get(row.ImgUrl).content
+            with open('image%i.jpg' %index, 'wb') as handler:
+                handler.write(img_data)
+            if index==0:
+                self.body.extend([r' \includegraphics[width=1.1cm,center]{image%i.jpg}  & \textbf{%s}   &  %s &    \textbf{AVG} %.0f  & \textbf{MAX} %.0f\\' %(index,row.Game,row.PlayedTime,row.AVG,row.MAX)])
+            else:
+                self.body.extend([
+                                     r' \includegraphics[width=1.1cm,center]{image%i.jpg}  & \textbf{%s}   &  %s &    \textbf{AVG} %.0f  & \textbf{MAX} %.0f\\' % (
+                                     index, row.Game, row.PlayedTime, row.AVG, row.MAX)])
+
+            # self.body.extend([r'\hline'])
+        self.body.extend([r'\end{tabular}'])
+
+        # self.body.extend([r'\includegraphics{image_name.jpg}'])
+
 
 
     def Add_color(self,NAME,R,G,B, flag_print=False):
@@ -187,14 +211,14 @@ if __name__ == '__main__':
     with timer():
 
         PL = PythonLatex('elxokas',portada='portada2.pdf', logo='artic_boa_logo.pdf')
-        PL.Preamble('artic_boa_logo_small_mono.pdf')
+        # PL.Preamble('artic_boa_logo_small_mono.pdf','artic_boa_logo_small_mono.pdf')
         PL.Add_color('prueba_color', 255, 0, 0)
         PL.Add_color('otra_prueba', 1, 200, 0, flag_print=False)
 
         # PL.Titlepage(TITLE2='ANÁLISIS DE MERCADO DE SEGUNDA MANO', MAIN_TITLE='VOLKSWAGEN ARTEON', TITLE3='INFORME DE RESULTADOS')
         PL.Add_chapter('Análiticas de la transmisión')
-        PL.Add_section('Resumen', 'content.txt')
-        PL.Add_image('evangelion0_2021_11_21.pdf', 'Numero de coches por color', SIZEREL=1)
+        # PL.Add_section('Resumen', 'content.txt')
+        # PL.Add_image('evangelion0_2021_11_21.pdf', 'Numero de coches por color', SIZEREL=1)
 
 
 

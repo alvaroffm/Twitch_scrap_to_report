@@ -29,7 +29,7 @@ from secrets import CLIENT_ID,ACCESS_TOKEN
 INPUTS
 
 """""""""""""""
-STREAMER = 'ERNESBARBEQ'
+STREAMER = 'ibai'
 DELAY = 180
 
 """"""""""""""""""
@@ -51,14 +51,16 @@ while True:
 
     download(STREAMER)
     filename = check_online(STREAMER, DELAY_CHECK=180)
+
     print(filename)
     MainLoop(STREAMER ,filename, DELAY)
-    # filename = r'C:\Users\Buzz\PycharmProjects\Twitch_scrap_to_report/data/2022_01_24T18_elxokas.json'
+
+    # filename = r'C:\Users\Alvaro\PycharmProjects\Twitch_scrap_to_report\data/elxokas_2021_11_27T17.json'
     # UNCOMMENT TO CHECK WITHOUT RUNNING THE LOOP
     Data_frame(filename)
     df = Data_frame(filename)
     ST = df['user_login'].iloc[1]
-    image, games_df ,profile_img = Graph(ST,df,flag_plot=True)
+    image, games_df ,profile_img = Graph(ST,df,flag_plot=False)
     print(games_df)
 
     with timer():
@@ -71,8 +73,13 @@ while True:
         # PL.Titlepage(TITLE2='ANÁLISIS DE MERCADO DE SEGUNDA MANO', MAIN_TITLE='VOLKSWAGEN ARTEON', TITLE3='INFORME DE RESULTADOS')
 
         # PL.Add_chapter('Análiticas de la transmisión')
+
         PL.Add_section(FECHA)
-        PL.Add_image(profile_img, SIZEREL=0.2)
+        # PL.Add_image(profile_img, SIZEREL=0.14)
+
+        PL.Crete_table_info(games_df,profile_img)
+        # PL.Add_section('Análiticas de la transmisión')
+
         PL.Add_image(image, 'Numero de viewers durante la retransmisión', SIZEREL=1)
 
 
@@ -83,8 +90,11 @@ while True:
         print('Compilando archivo TEX')
         os.system('xelatex -quiet report/output_latex.tex')
         print(bcolors('OKGREEN', '\n #################################### \n # Archivo PDF creado correctamente # \n ####################################'))
-        file = filename.split('/data/')[1].split('.json')[0]
+
+        file = filename.split("data/")[1].split('.json')[0]
         shutil.move('output_latex.pdf', f'report/{file}.pdf')
+        print(bcolors('HEADER',
+                      F' # {file} # \n ####################################'))
 
 
         to_delete=['output_latex.log','output_latex.out','output_latex.aux']
@@ -93,6 +103,6 @@ while True:
 
     # os.system(r'C:\Users\Buzz\PycharmProjects\Twitch_scrap_to_report\report\%s.pdf' %file)
 
-    break
+    # break
 
 

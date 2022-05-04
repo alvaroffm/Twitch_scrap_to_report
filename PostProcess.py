@@ -56,9 +56,9 @@ def Graph(STREAMER, df, flag_plot=False):
     color = '#5c85ad'
 
     fpath = os.path.join(mpl.get_data_path(),
-                         r"C:\Users\Buzz\PycharmProjects\Cochesnet_Latex\fonts\Montserrat-Regular.ttf")
+                         r"C:\Users\Alvaro\PycharmProjects\Twitch_scrap_to_report\fonts\Montserrat-Regular.ttf")
     fpath2 = os.path.join(mpl.get_data_path(),
-                          r"C:\Users\Buzz\PycharmProjects\Cochesnet_Latex\fonts\Montserrat-SemiBold.ttf")
+                          r"C:\Users\Alvaro\PycharmProjects\Twitch_scrap_to_report\fonts\Montserrat-SemiBold.ttf")
 
     prop = fm.FontProperties(fname=fpath, weight='bold')
     prop_bold = fm.FontProperties(fname=fpath2, weight='bold', size=13)
@@ -138,7 +138,7 @@ def Graph(STREAMER, df, flag_plot=False):
     print(df.last)
 
     streaming_minutes = int((df.last - df.started).total_seconds() / 60)
-    streaming_hours = round(streaming_minutes / 60, 2)
+    streaming_hours = round(streaming_minutes / 60 -1, 2) # el -1 es para adecuarlo al horario de verano/invierno
 
     max_viewers = df_clean.viewer_count.max()
 
@@ -197,7 +197,7 @@ def Graph(STREAMER, df, flag_plot=False):
     minutes = (time * 60) % 60
 
     duration = "%dh %02dm" % (hours, minutes)
-    print(duration)
+    print('duration',duration)
 
     ax3.annotate('STREAM DURATION' + '\n' + r"$\bf{" + duration + "}$", (1, 1), xytext=(0.94, 0.08),
                  xycoords='axes fraction', color='red', fontproperties=prop_metrics, verticalalignment='top',
@@ -225,12 +225,12 @@ def Graph(STREAMER, df, flag_plot=False):
         print(game)
         df_game = df_clean[df_clean['game_name']==game]
         max_viewers_game = df_game['viewer_count'].max()
-        # print(max_viewers_game)
+        print(max_viewers_game)
         avg_viewers_game = df_game['viewer_count'].mean()
-        # print('avg' , avg_viewers_game)
+        print('avg' , avg_viewers_game)
 
 
-        game_streaming_minutes = len(df_game) * 2
+        game_streaming_minutes = len(df_game) * 3
 
         game_streaming_hours = round(game_streaming_minutes / 60, 2)
 
@@ -259,12 +259,12 @@ def Graph(STREAMER, df, flag_plot=False):
         url = stream['data'][0]['box_art_url'].replace('-{width}x{height}', '')
 
         images.append(url)
-        print(images)
+        # print(images)
 
 
 
     zip_data = zip(games_played,hours_played,game_avg_viewers,game_max_viewers,images)
-    games_df_games = pd.DataFrame(zip_data,columns = ['Game','Played Time','AVG', 'MAX','Img Url'])
+    games_df_games = pd.DataFrame(zip_data,columns = ['Game','PlayedTime','AVG', 'MAX','ImgUrl'])
     # dddd= games_df_games.transpose()
     # print(dddd.columns)
     # dddd.rename(columns={"A": "a", "B": "c"})
@@ -300,7 +300,7 @@ def Graph(STREAMER, df, flag_plot=False):
 if __name__ == '__main__':
 
     cwd = os.getcwd()
-    df = Data_frame(f'data/2021_11_29T17_elxokas.json')
+    df = Data_frame(f'data/2022_05_01T15_elxokas.json')
     STREAMER = str(df['user_login'].unique()).split("'")[1]
-    imagen, games , profile_img = Graph(STREAMER,df, flag_plot=True)
-    # print(games)
+    imagen, games , profile_img = Graph(STREAMER,df, flag_plot=False)
+    print(games)
